@@ -22,6 +22,8 @@ use Exception;
  */
 class Helper
 {
+    
+    private static $_includeCharts = false;
     /**
      * @var object Cached PhpSpreadsheet object
      */
@@ -472,7 +474,13 @@ class Helper
         $filepath = (stripos($filename, $extension)===(strlen($filename)-strlen($extension)))
             ? $filename 
             : "{$filename}{$extension}";
-
+        /*
+        * Set if document contain charts 
+        */
+        if (self::$includeCharts) {
+            $objWriter->setIncludeCharts(true);
+        }
+        
         // Save file
         $objWriter->save($filepath);
         return $filepath;
